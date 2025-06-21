@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Lovepersonality/lovepersonalitytest.online#readme",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.10",
     "autoprefixer": "^10.4.21",
     "next": "^15.3.4",
     "postcss": "^8.5.6",
