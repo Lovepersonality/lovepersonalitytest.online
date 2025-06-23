@@ -9,17 +9,17 @@ const playfair = Playfair_Display({
 const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
-  weight: ['400', '700'] // <-- THIS LINE IS REQUIRED!
+  weight: ['400', '700']
 })
 
 export const metadata: Metadata = {
-  title: 'Love Personality Test – Discover Your Romantic Type',
-  description: 'Take the Love Personality Test and reveal your unique romantic style! Fun, interactive, and deeply insightful. Find out if you are a Romantic Dreamer, an Adventurer, or something else.',
-  keywords: ['Love Test', 'Personality Quiz', 'Romantic Personality', 'Relationship Quiz', 'Dating', 'Love Types'],
+  title: 'Love Personality Test – Discover Your Romantic Type | Best Relationship Quiz 2025',
+  description: 'Take the Love Personality Test and discover your unique romantic personality type! Fun, insightful, and scientifically designed. Find out if you are a Romantic Dreamer, Adventurer, Charmer, or Thinker. Join thousands discovering their love type!',
+  keywords: ['Love Test', 'Personality Quiz', 'Romantic Personality', 'Relationship Quiz', 'Dating', 'Love Types', 'Romantic Type', 'Relationship advice', 'Online quiz'],
   authors: [{ name: 'LovePersonalityTest.online', url: 'https://lovepersonalitytest.online' }],
   openGraph: {
     title: 'Love Personality Test – Discover Your Romantic Type',
-    description: 'Reveal your unique love personality! Take the fun and interactive Love Personality Test.',
+    description: 'Reveal your unique love personality! Take the best and most insightful Love Personality Test online.',
     url: 'https://lovepersonalitytest.online',
     siteName: 'Love Personality Test',
     images: [
@@ -55,7 +55,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
-      <body>
+      <head>
+        {/* Favicon for SEO */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* FAQ Schema for Google Rich Results */}
+        <script type="application/ld+json" suppressHydrationWarning>
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is the Love Personality Test?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The Love Personality Test is a free, science-inspired quiz designed to reveal your romantic personality type and help you understand your relationship style."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is the Love Personality Test free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes! The Love Personality Test is completely free and available to everyone online."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How accurate is the Love Personality Test?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our quiz is based on relationship psychology research and is meant for fun and self-discovery. For serious advice, consult a professional."
+                }
+              }
+            ]
+          })}
+        </script>
+      </head>
+      <body className="bg-gradient-to-br from-pink-100 via-rose-50 to-violet-100 min-h-screen">
         {children}
       </body>
     </html>

@@ -1,111 +1,50 @@
-'use client';
+import Quiz from "./components/Quiz";
 
-import { useState } from 'react';
-
-// 12 example questions - you can edit the text if you want!
-const questions = [
-  { question: "How do you express affection?", answers: ["Words", "Gifts", "Touch", "Quality Time"] },
-  { question: "What makes you feel closest to someone?", answers: ["Deep talks", "Going on adventures", "Laughing together", "Acts of service"] },
-  { question: "Your ideal date night is...", answers: ["Candlelit dinner", "Outdoor adventure", "Movie marathon", "Surprise getaway"] },
-  { question: "When hurt, you prefer to...", answers: ["Talk it out", "Take space", "Distract yourself", "Write your feelings"] },
-  { question: "You are most attracted to...", answers: ["Kindness", "Confidence", "Creativity", "Ambition"] },
-  { question: "Which gift would thrill you most?", answers: ["Heartfelt letter", "Surprise trip", "Thoughtful playlist", "Personalized jewelry"] },
-  { question: "In a partner, you value...", answers: ["Loyalty", "Passion", "Playfulness", "Support"] },
-  { question: "Biggest relationship pet peeve?", answers: ["Lack of communication", "Routine", "Neglect", "Jealousy"] },
-  { question: "Love is...", answers: ["A journey", "An adventure", "A mystery", "A masterpiece"] },
-  { question: "You fall for someone who...", answers: ["Makes you laugh", "Listens deeply", "Surprises you", "Shares your dreams"] },
-  { question: "Which song describes your love life?", answers: ["Endless Love", "Crazy in Love", "Love Story", "Bleeding Love"] },
-  { question: "Your friends describe you as...", answers: ["Romantic", "Dreamer", "Realist", "Adventurer"] },
-];
-
-// Example result (you can expand this to calculate different results)
-const personalityResult = {
-  type: "The Romantic Dreamer",
-  teaser: "You are The Romantic D...",
-  full: "You are The Romantic Dreamer! You value deep connections and cherish meaningful moments. Your ideal relationship is filled with passion, understanding, and shared dreams.",
-  highlights: [
-    "Passionate and caring",
-    "Seeks deep connection",
-    "Loves meaningful gestures",
-  ],
-};
-
-export default function HomePage() {
-  const [current, setCurrent] = useState(0);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const [showFinal, setShowFinal] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
-
-  const handleSelect = (answer: string) => {
-    setAnswers([...answers, answer]);
-    if (current < questions.length - 1) {
-      setCurrent(current + 1);
-    } else {
-      setShowFinal(true);
-    }
-  };
-
+export default function Home() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-deep via-primary to-accent px-4">
-      <div className="bg-white/80 rounded-xl shadow-2xl p-8 max-w-md w-full">
-        <h1 className="text-3xl font-playfair text-deep mb-6 text-center font-bold">
-          Love Personality Test
-        </h1>
-        {!showFinal ? (
-          <div>
-            <div className="text-xl font-semibold text-primary mb-4 text-center">
-              {`Question ${current + 1} of ${questions.length}`}
-            </div>
-            <div className="text-lg font-poppins text-gray-800 mb-8 text-center">
-              {questions[current].question}
-            </div>
-            <div className="space-y-4">
-              {questions[current].answers.map((ans) => (
-                <button
-                  key={ans}
-                  onClick={() => handleSelect(ans)}
-                  className="block w-full bg-accent/90 hover:bg-accent text-white text-lg rounded-lg py-3 font-bold shadow-md transition"
-                >
-                  {ans}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="text-center">
-            {!unlocked ? (
-              <>
-                <div className="text-2xl font-bold text-primary mb-4 animate-pulse">
-                  {personalityResult.teaser}
-                </div>
-                <button
-                  onClick={() => setUnlocked(true)}
-                  className="mt-4 bg-deep hover:bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg transition text-lg"
-                >
-                  Unlock Full Result
-                </button>
-              </>
-            ) : (
-              <div>
-                <div className="text-2xl font-bold text-primary mb-4">
-                  {personalityResult.type}
-                </div>
-                <div className="text-lg font-poppins text-gray-800 mb-4">
-                  {personalityResult.full}
-                </div>
-                <ul className="mb-6 text-left">
-                  {personalityResult.highlights.map((hl, i) => (
-                    <li key={i} className="text-deep font-semibold">
-                      • {hl}
-                    </li>
-                  ))}
-                </ul>
-                {/* You can add confetti here for extra effect! */}
-              </div>
-            )}
-          </div>
-        )}
+    <main className="flex flex-col min-h-screen items-center justify-center relative">
+      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+        {/* Optional: SVG gradient or animation */}
       </div>
-    </div>
+      <section className="z-10 mt-12 mb-10 text-center max-w-2xl mx-auto">
+        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 via-violet-500 to-teal-400 text-transparent bg-clip-text mb-4 font-display">
+          Love Personality Test – Discover Your Romantic Type
+        </h1>
+        <h2 className="text-lg md:text-xl text-gray-700 mb-8 font-semibold">
+          Take the best relationship quiz of 2025. Reveal your unique love style in minutes!
+        </h2>
+        <p className="mb-4 text-gray-800">
+          <strong>Why take this quiz?</strong> Our fun, research-inspired test is designed for singles and couples who want to understand themselves and their partners better. Find out if you're a Dreamer, Adventurer, Charmer, or Thinker!
+        </p>
+        <p className="mb-2 text-gray-700">
+          <em>100% free • Instant results • No signup required</em>
+        </p>
+      </section>
+      <Quiz />
+      <section className="mt-8 mb-8 px-4 max-w-2xl mx-auto" id="faq" aria-label="Frequently Asked Questions">
+        <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+        <div className="mb-2">
+          <strong>What is the Love Personality Test?</strong>
+          <div className="text-gray-700 mb-2">
+            It’s a quick, online quiz to help you discover your romantic strengths and style, based on relationship psychology.
+          </div>
+        </div>
+        <div className="mb-2">
+          <strong>Is this quiz really free?</strong>
+          <div className="text-gray-700 mb-2">
+            Yes! No signup, no payment, just fun and insights.
+          </div>
+        </div>
+        <div className="mb-2">
+          <strong>Can I share my results?</strong>
+          <div className="text-gray-700 mb-2">
+            Absolutely! There’s a share button after you finish the quiz.
+          </div>
+        </div>
+      </section>
+      <footer className="mt-12 mb-4 text-xs text-gray-500 text-center w-full z-10">
+        &copy; {new Date().getFullYear()} LovePersonalityTest.online. All rights reserved.
+      </footer>
+    </main>
   );
 }

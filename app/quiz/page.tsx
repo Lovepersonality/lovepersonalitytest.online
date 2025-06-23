@@ -1,246 +1,158 @@
 "use client";
 import { useState } from "react";
-import Confetti from "react-confetti";
 
-const quizData = [
+const questions = [
   {
-    q: "How do you show affection in a relationship?",
-    a: [
-      { v: "dreamer", t: "I plan romantic surprises (The Romantic Dreamer)" },
-      { v: "guardian", t: "I’m always there to support my partner (The Loyal Guardian)" },
-      { v: "flirt", t: "I keep things playful and spontaneous (The Playful Flirt)" },
-      { v: "introvert", t: "I prefer deep, quiet moments together (The Mysterious Introvert)" }
-    ]
+    question: "What is your ideal romantic date?",
+    options: [
+      { text: "Candle-lit Dinner 🍷", type: "dreamer" },
+      { text: "Adventure Outdoors 🥾", type: "adventurer" },
+      { text: "Fun at a Festival 🎉", type: "charmer" },
+      { text: "Deep Talks Under Stars 🌌", type: "thinker" }
+    ],
   },
   {
-    q: "Your idea of the perfect date is...",
-    a: [
-      { v: "dreamer", t: "A moonlit walk or candlelit dinner" },
-      { v: "guardian", t: "A cozy night in, making my partner feel secure" },
-      { v: "flirt", t: "A fun event with lots of laughs" },
-      { v: "introvert", t: "An intimate conversation in a quiet spot" }
-    ]
+    question: "Which gift would make you happiest?",
+    options: [
+      { text: "A heartfelt letter 💌", type: "dreamer" },
+      { text: "Tickets to a concert 🎫", type: "charmer" },
+      { text: "A surprise trip ✈️", type: "adventurer" },
+      { text: "A thoughtful book 📚", type: "thinker" }
+    ],
   },
   {
-    q: "What do you value most in love?",
-    a: [
-      { v: "dreamer", t: "Romance and shared dreams" },
-      { v: "guardian", t: "Loyalty and dependability" },
-      { v: "flirt", t: "Excitement and playfulness" },
-      { v: "introvert", t: "Depth and understanding" }
-    ]
+    question: "How do you express love?",
+    options: [
+      { text: "Words of affirmation 💖", type: "dreamer" },
+      { text: "Acts of adventure 🌍", type: "adventurer" },
+      { text: "Playful teasing 😏", type: "charmer" },
+      { text: "Listening deeply 👂", type: "thinker" }
+    ],
   },
-  {
-    q: "How do you handle conflict?",
-    a: [
-      { v: "dreamer", t: "Try to smooth it over with kind words" },
-      { v: "guardian", t: "Calmly talk things through" },
-      { v: "flirt", t: "Deflect with humor or charm" },
-      { v: "introvert", t: "Withdraw and reflect quietly" }
-    ]
-  },
-  // ...add more questions as desired
 ];
 
-const profileTitles = {
-  dreamer: "The Romantic Dreamer",
-  guardian: "The Loyal Guardian",
-  flirt: "The Playful Flirt",
-  introvert: "The Mysterious Introvert"
+const results = {
+  dreamer: {
+    title: "Romantic Dreamer",
+    emoji: "💖",
+    desc: "You cherish deep connections, meaningful gestures, and believe in soulmates. You bring warmth and depth to relationships.",
+    color: "from-pink-400 to-pink-500",
+    share: "I'm a Romantic Dreamer! Take the Love Personality Test to discover your type at https://lovepersonalitytest.online"
+  },
+  adventurer: {
+    title: "Adventurous Lover",
+    emoji: "🌍",
+    desc: "Excitement and novelty keep your love alive! You inspire your partner to try new things and see the world with you.",
+    color: "from-violet-400 to-violet-500",
+    share: "I'm an Adventurous Lover! Discover your love type at https://lovepersonalitytest.online"
+  },
+  charmer: {
+    title: "Playful Charmer",
+    emoji: "😏",
+    desc: "You light up every room with your wit and energy. Love is fun, and you make every moment memorable.",
+    color: "from-yellow-400 to-orange-400",
+    share: "I'm a Playful Charmer! Find your romantic style at https://lovepersonalitytest.online"
+  },
+  thinker: {
+    title: "Thoughtful Thinker",
+    emoji: "🌌",
+    desc: "You’re introspective, a great listener, and value meaningful conversations. Your love is deep and understanding.",
+    color: "from-emerald-400 to-teal-400",
+    share: "I'm a Thoughtful Thinker! What's your love type? https://lovepersonalitytest.online"
+  }
 };
+
+function ResultCard({ result, onRestart }: { result: any, onRestart: () => void }) {
+  function share() {
+    if (navigator.share) {
+      navigator.share({
+        title: "My Love Personality Test Result",
+        text: result.share,
+        url: "https://lovepersonalitytest.online"
+      });
+    } else {
+      navigator.clipboard.writeText(result.share);
+      alert("Result copied! Share it anywhere.");
+    }
+  }
+  return (
+    <section className="w-full max-w-xl mx-auto" aria-label="Quiz Results">
+      <div className={`rounded-2xl shadow-xl p-10 text-center text-white bg-gradient-to-br ${result.color}`}>
+        <div className="text-6xl mb-4">{result.emoji}</div>
+        <h2 className="text-3xl font-extrabold mb-2">{result.title}</h2>
+        <p className="mb-6 text-lg">{result.desc}</p>
+        <button
+          className="px-8 py-3 rounded-lg bg-white/80 text-pink-700 font-bold shadow hover:bg-white transition mr-2"
+          onClick={onRestart}
+        >
+          Try Again
+        </button>
+        <button
+          className="px-8 py-3 rounded-lg bg-pink-600 text-white font-bold shadow hover:bg-pink-700 transition"
+          onClick={share}
+          aria-label="Share your result"
+        >
+          Share Result
+        </button>
+      </div>
+    </section>
+  );
+}
 
 export default function QuizPage() {
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<string[]>(Array(quizData.length).fill(""));
+  const [answers, setAnswers] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
-  const [profileKey, setProfileKey] = useState("");
-  const [profileTitle, setProfileTitle] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [paying, setPaying] = useState(false);
-  const [confetti, setConfetti] = useState(false);
-  const [error, setError] = useState("");
 
-  const allAnswered = answers.every(ans => ans);
-
-  function handleAnswer(idx: number, val: string) {
-    const arr = [...answers];
-    arr[idx] = val;
-    setAnswers(arr);
-    setError("");
+  function handleOption(type: string) {
+    setAnswers([...answers, type]);
+    if (step < questions.length - 1) {
+      setStep(step + 1);
+    } else {
+      setShowResult(true);
+    }
   }
 
-  function handleNext() {
-    if (answers[step]) setStep(step + 1);
-    else setError("Please select an option to proceed.");
+  function getResult() {
+    // Find the most selected type
+    const tally: Record<string, number> = {};
+    answers.forEach(a => { tally[a] = (tally[a] || 0) + 1 });
+    const sorted = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+    return results[sorted[0][0] as keyof typeof results];
   }
 
-  function handlePrev() {
-    setStep(step - 1);
-    setError("");
-  }
-
-  function handleSubmitQuiz() {
-    const counts = { dreamer: 0, guardian: 0, flirt: 0, introvert: 0 };
-    answers.forEach(a => counts[a]++);
-    const key = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b) as keyof typeof profileTitles;
-    setProfileKey(key);
-    setProfileTitle(profileTitles[key]);
-    setShowResult(true);
-    setStep(quizData.length);
-    setError("");
-  }
-
-  async function handlePay() {
-    setPaying(true); setError("");
-    // @ts-ignore: Paystack global
-    const handler = window.PaystackPop && window.PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      email: userEmail,
-      amount: 499 * 100, // $4.99 USD
-      currency: "USD",
-      callback: async (response: any) => {
-        const res = await fetch("/api/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            reference: response.reference,
-            email: userEmail,
-            name: userName,
-            profileKey
-          })
-        }).then(res => res.json());
-        if (res.success && res.token) {
-          setConfetti(true);
-          setTimeout(() => {
-            window.location.href = `/profile/${profileKey}?token=${res.token}`;
-          }, 1800);
-        } else {
-          setError("We could not verify your payment. Please try again or contact support.");
-          setPaying(false);
-        }
-      },
-      onClose: function () {
-        setError("Payment was closed. Please try again.");
-        setPaying(false);
-      }
-    });
-    handler && handler.openIframe();
+  if (showResult) {
+    return <ResultCard result={getResult()} onRestart={() => {
+      setStep(0); setAnswers([]); setShowResult(false);
+    }} />;
   }
 
   return (
-    <>
-      {confetti && <Confetti />}
-      <main className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-8 mb-4">
-        <h1 className="font-playfair text-3xl text-center mb-3">Discover Your Love Personality</h1>
-        <div className="text-center text-green-600 font-bold mb-2">Verified & Secure</div>
-        {!showResult ? (
-          <>
-            <div className="flex items-center justify-center mb-4">
-              <span>Question {step + 1} of {quizData.length}</span>
-              <progress value={step + 1} max={quizData.length} className="ml-4 w-56"></progress>
-            </div>
-            <div className="mb-2 font-semibold">{quizData[step].q}</div>
-            <div>
-              {quizData[step].a.map((opt, i) => (
-                <label key={i} className="block mb-2">
-                  <input
-                    type="radio"
-                    name={`q${step}`}
-                    value={opt.v}
-                    checked={answers[step] === opt.v}
-                    onChange={() => handleAnswer(step, opt.v)}
-                    className="mr-2"
-                  />
-                  {opt.t}
-                </label>
-              ))}
-            </div>
-            {error && <div className="text-red-600 mt-2">{error}</div>}
-            <div className="flex gap-2 mt-4">
-              {step > 0 && <button onClick={handlePrev} className="btn">Back</button>}
-              {step < quizData.length - 1 && (
-                <button onClick={handleNext} className="btn">
-                  Next
-                </button>
-              )}
-              {step === quizData.length - 1 && (
-                <button
-                  onClick={e => { e.preventDefault(); allAnswered ? handleSubmitQuiz() : setError("Answer all questions."); }}
-                  className="btn"
-                >
-                  Reveal My Personality
-                </button>
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-            <h2 className="mt-4 mb-1 text-2xl text-center">
-              Your Love Personality is: <span className="text-pink-600">{profileTitle}</span>
-            </h2>
-            <p className="text-center mb-6">
-              To unlock your full personalized profile, expert advice, and download, please fill in your details and pay securely below.
-            </p>
-            <form
-              className="flex flex-col gap-3 mx-auto max-w-md"
-              onSubmit={e => { e.preventDefault(); handlePay(); }}
-            >
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={userName}
-                onChange={e => setUserName(e.target.value)}
-                className="input"
-                required
-                autoComplete="name"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={userEmail}
-                onChange={e => setUserEmail(e.target.value)}
-                className="input"
-                required
-                autoComplete="email"
-              />
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-100 via-rose-50 to-violet-100">
+      <div className="w-full max-w-xl mx-auto mt-12 mb-10">
+        <div className="bg-white/80 rounded-2xl shadow-xl p-8 mb-6">
+          <div className="text-xs text-gray-500 mb-2">
+            Question {step + 1} of {questions.length}
+          </div>
+          <h2 className="text-2xl font-bold mb-6">{questions[step].question}</h2>
+          <div className="space-y-3">
+            {questions[step].options.map((opt) => (
               <button
-                type="submit"
-                className="btn"
-                disabled={paying || !userName || !userEmail || !userEmail.includes("@")}
+                key={opt.text}
+                onClick={() => handleOption(opt.type)}
+                className={`w-full px-6 py-4 rounded-xl bg-gradient-to-r hover:scale-105 transition-all duration-200 font-semibold text-lg shadow text-white ${
+                  opt.type === "dreamer" ? "from-pink-400 to-pink-500" :
+                  opt.type === "adventurer" ? "from-violet-400 to-violet-500" :
+                  opt.type === "charmer" ? "from-yellow-400 to-orange-400" :
+                  "from-emerald-400 to-teal-400"
+                }`}
               >
-                {paying ? "Processing Payment..." : "Unlock for $4.99"}
+                {opt.text}
               </button>
-              {error && <div className="text-red-600">{error}</div>}
-            </form>
-          </>
-        )}
-      </main>
-      <style jsx>{`
-        .btn {
-          background: #ff3366;
-          color: #fff;
-          border: none;
-          border-radius: 8px;
-          padding: 0.7rem 2rem;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-        .btn:disabled {
-          background: #ffc0cb;
-          cursor: not-allowed;
-        }
-        .input {
-          border: 1px solid #ffd6e0;
-          border-radius: 8px;
-          padding: 0.7rem;
-          font-size: 1rem;
-        }
-        .font-playfair {
-          font-family: 'Playfair Display', serif;
-        }
-      `}</style>
-    </>
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

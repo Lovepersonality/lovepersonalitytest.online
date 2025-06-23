@@ -1,40 +1,12 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="url(#a)" />
+  <text x="50%" y="40%" text-anchor="middle" font-size="64" font-family="Playfair Display, serif" fill="#fff">Love Personality Test</text>
+  <text x="50%" y="55%" text-anchor="middle" font-size="32" font-family="Poppins, sans-serif" fill="#fff">Discover Your Romantic Type!</text>
+  <desc>SEO-optimized OG image for Love Personality Test, with clear alt text for ranking and social share.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#ff3366"/>
-      <stop offset="1" stop-color="#23c483"/>
+    <linearGradient id="a" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#818cf8"/>
     </linearGradient>
-    <filter id="shadow" x="0" y="0" width="1200" height="630" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#6a0572" flood-opacity="0.2"/>
-    </filter>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <g filter="url(#shadow)">
-    <text x="50%" y="40%" text-anchor="middle" fill="#fff" font-size="72" font-family="'Playfair Display', serif" font-weight="bold" dy=".3em">
-      Love Personality Test
-    </text>
-    <text x="50%" y="52%" text-anchor="middle" fill="#fff" font-size="38" font-family="'Poppins', sans-serif" font-weight="500" dy=".3em">
-      Discover Your Romantic Type
-    </text>
-  </g>
-  <g>
-    <ellipse cx="600" cy="510" rx="140" ry="35" fill="#fff" opacity="0.13"/>
-    <path d="M600 340
-      a60 60 0 0 1 120 0
-      q0 40 -60 90
-      q-60 -50 -60 -90
-      a60 60 0 0 1 120 0" 
-      fill="#fff" fill-opacity="0.22"
-      stroke="#fff" stroke-width="4"/>
-    <path d="M600 370
-      a35 35 0 0 1 70 0
-      q0 20 -35 46
-      q-35 -26 -35 -46
-      a35 35 0 0 1 70 0" 
-      fill="#fff" fill-opacity="0.45"
-      stroke="#fff" stroke-width="2"/>
-    <text x="600" y="470" text-anchor="middle" fill="#fff" font-size="32" font-family="'Poppins', sans-serif" font-weight="bold" dy=".3em">
-      ❤️
-    </text>
-  </g>
 </svg>

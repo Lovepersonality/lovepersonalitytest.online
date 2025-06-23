@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lovepersonalitytest.online/sitemap.xml
