@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
- "preinstall": "npx npm-force-resolutions",
-"postinstall": "npx npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions",
+    "postinstall": "npx npm-force-resolutions",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
@@ -17,12 +17,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
- "engines": {
+  "engines": {
     "node": "18.x"
   },
-"resolutions": {
-  "postcss": "8.4.31"
-},
+  "resolutions": {
+    "postcss": "8.4.31"
+  },
   "bugs": {
     "url": "https://github.com/Lovepersonality/lovepersonalitytest.online/issues"
   },
@@ -30,7 +30,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.21",
     "next": "^15.3.4",
-    "postcss": "^8.4.31",
+    "postcss": "8.4.31",
     "react": "^19.1.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.1.0",
