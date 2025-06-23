@@ -8,7 +8,8 @@ const playfair = Playfair_Display({
 })
 const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-poppins'
+  variable: '--font-poppins',
+  weight: ['400', '700'] // Specify the weights you need
 })
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     siteName: 'Love Personality Test',
     images: [
       {
-        url: '/og-image.svg', // <-- Uses your SVG in the public folder
+        url: '/og-image.svg', // Points to your OG image in public/
         width: 1200,
         height: 630,
         alt: 'Love Personality Test – Romantic Profile',
@@ -36,8 +37,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Love Personality Test – Discover Your Romantic Type',
     description: 'Reveal your unique love personality! Take the fun and interactive Love Personality Test.',
-    images: ['/og-image.svg'], // <-- Uses your SVG in the public folder
-    creator: '@YourTwitterHandle' // Optional: add your Twitter handle
+    images: ['/og-image.svg'], // Points to your OG image in public/
+    creator: '@YourTwitterHandle' // Optional: replace with your Twitter handle
   },
   robots: { index: true, follow: true },
   viewport: 'width=device-width, initial-scale=1',
