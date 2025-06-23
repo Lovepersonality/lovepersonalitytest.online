@@ -1,31 +1,61 @@
 import './globals.css'
-import { ReactNode } from 'react'
+import { Playfair_Display, Poppins } from 'next/font/google'
+import type { Metadata } from 'next'
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair'
+})
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins'
+})
+
+export const metadata: Metadata = {
+  title: 'Love Personality Test – Discover Your Romantic Type',
+  description: 'Take the Love Personality Test and reveal your unique romantic style! Fun, interactive, and deeply insightful. Find out if you are a Romantic Dreamer, an Adventurer, or something else.',
+  keywords: ['Love Test', 'Personality Quiz', 'Romantic Personality', 'Relationship Quiz', 'Dating', 'Love Types'],
+  authors: [{ name: 'LovePersonalityTest.online', url: 'https://lovepersonalitytest.online' }],
+  openGraph: {
+    title: 'Love Personality Test – Discover Your Romantic Type',
+    description: 'Reveal your unique love personality! Take the fun and interactive Love Personality Test.',
+    url: 'https://lovepersonalitytest.online',
+    siteName: 'Love Personality Test',
+    images: [
+      {
+        url: '/og-image.svg', // <-- Uses your SVG in the public folder
+        width: 1200,
+        height: 630,
+        alt: 'Love Personality Test – Romantic Profile',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Love Personality Test – Discover Your Romantic Type',
+    description: 'Reveal your unique love personality! Take the fun and interactive Love Personality Test.',
+    images: ['/og-image.svg'], // <-- Uses your SVG in the public folder
+    creator: '@YourTwitterHandle' // Optional: add your Twitter handle
+  },
+  robots: { index: true, follow: true },
+  viewport: 'width=device-width, initial-scale=1',
+  category: 'dating',
+  alternates: {
+    canonical: 'https://lovepersonalitytest.online',
+  },
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en">
-      <head>
-        <title>Love Personality Test | Discover Your Romantic Archetype</title>
-        <meta name="description" content="Take the world's most accurate, verified love personality quiz. Unlock your romantic archetype, get expert advice, and more." />
-        <meta property="og:title" content="Love Personality Test | Verified Romantic Quiz" />
-        <meta property="og:description" content="Take the world's most trusted love personality quiz. Unlock your romantic archetype instantly." />
-        <meta property="og:image" content="/logo.png" />
-        <meta property="og:url" content="https://lovepersonalitytest.online/" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="/logo.png" />
-        <link rel="canonical" href="https://lovepersonalitytest.online/" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-      </head>
+    <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
       <body>
-        <nav className="flex items-center justify-between px-8 py-4 bg-white bg-opacity-80 shadow">
-          <img src="/logo.png" alt="Love Personality Test Logo" className="h-12 w-auto" />
-          <a href="/quiz" className="font-bold text-primary text-lg hover:text-deep transition">Take The Quiz</a>
-        </nav>
         {children}
-        <footer className="text-center py-6 mt-10 bg-gradient-to-tr from-primary via-pink-200 to-accent text-deep font-semibold">
-          &copy; {new Date().getFullYear()} LovePersonalityTest.online. All rights reserved.
-        </footer>
       </body>
     </html>
   )
